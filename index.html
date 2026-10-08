@@ -1,12 +1,10 @@
-<!doctype html>
-<html lang="en" data-theme="dark">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#181918" />
-  <meta name="description" content="NexusEco AI runs privately in your browser with WebGPU." />
+<html lang="en" data-theme="dark"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#181918">
+  <meta name="description" content="NexusEco AI runs privately in your browser with WebGPU.">
   <title>NexusEco AI</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" crossorigin="anonymous">
   <style>
 :root{color-scheme:dark;--bg:#191a19;--side:#151615;--surface:#202120;--surface2:#282a28;--surface3:#303230;--line:#393b39;--line2:#2d2f2d;--text:#f1f2ef;--muted:#a4a8a2;--faint:#777c76;--green:#9cb69a;--danger:#e29b9b;--dangerbg:#321f1f;--shadow:0 18px 50px #0005;--sidebar:274px;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-synthesis:none}
 :root[data-theme=light]{color-scheme:light;--bg:#f7f7f4;--side:#eeefeb;--surface:#fff;--surface2:#f0f1ed;--surface3:#e7e9e4;--line:#d3d6d0;--line2:#e1e3de;--text:#202220;--muted:#656a64;--faint:#858a84;--green:#5e7d5d;--danger:#a53f3f;--dangerbg:#f7e7e7;--shadow:0 18px 50px #26302a22}
@@ -46,17 +44,17 @@ html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--bg);c
         <button class="nav active" data-view="chat"><span>◌</span><b>Chat</b></button>
         <button class="nav" id="searchBtn"><span>⌕</span><b>Search chats</b></button>
         <button class="nav" data-view="eco"><span>♧</span><b>Eco checker</b></button>
-        <button class="nav" data-view="read"><span>▤</span><b>Read & learn</b></button>
+        <button class="nav" data-view="read"><span>▤</span><b>Read &amp; learn</b></button>
         <button class="nav" data-view="model"><span>▦</span><b>Model</b></button>
       </nav>
       <div class="history-wrap">
-        <div class="label"><span>Chats</span><span id="chatCount">0</span></div>
-        <div class="history" id="history"></div>
+        <div class="label"><span>Chats</span><span id="chatCount">1</span></div>
+        <div class="history" id="history"><div class="history-group">Today</div><button class="history-item active" title="New chat">New chat</button></div>
       </div>
       <div class="side-bottom">
         <button class="nav" data-view="settings"><span>⚙</span><b>Settings</b></button>
         <button class="nav" id="themeBtn"><span id="themeIcon">☼</span><b>Change theme</b></button>
-        <div class="side-status"><i class="dot" id="sideDot"></i><span id="sideStatus">Checking browser</span></div>
+        <div class="side-status"><i class="dot " id="sideDot"></i><span id="sideStatus">Model not installed</span></div>
       </div>
     </aside>
 
@@ -65,23 +63,23 @@ html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--bg);c
         <div class="top-left"><button class="icon-btn mobile" id="mobileBtn">☰</button><button class="chat-title" id="chatTitle">New chat</button><span class="local-tag">LOCAL</span></div>
         <div class="top-actions">
           <button class="eco-pill" data-view="eco">♧ <span id="miniEco">0 local replies</span></button>
-          <button class="model-pill" data-view="model"><i class="dot" id="modelDot"></i><span id="modelPill">Checking model</span></button>
+          <button class="model-pill" data-view="model"><i class="dot " id="modelDot"></i><span id="modelPill">Model not installed</span></button>
           <button class="icon-btn" id="chatMenuBtn">•••</button>
         </div>
-        <div class="menu" id="chatMenu" hidden>
+        <div class="menu" id="chatMenu" hidden="">
           <button id="renameBtn">Rename chat</button><button id="exportBtn">Export Markdown</button><button class="danger-text" id="deleteBtn">Delete chat</button>
         </div>
       </header>
 
       <section class="view active chat-view" id="chatView">
-        <div class="warning" id="gpuWarning" hidden><b>WebGPU is unavailable.</b> Use a current Chrome or Edge browser on a capable device.</div>
+        <div class="warning" id="gpuWarning" hidden=""><b>WebGPU is unavailable.</b> Use a current Chrome or Edge browser on a capable device.</div>
         <div class="chat-scroll" id="chatScroll">
           <div class="empty" id="emptyState">
             <div class="hero-mark">N</div><h1>How can I help?</h1><p>Private AI, running on your device.</p>
             <div class="install-card" id="installCard">
               <div><small id="installEyebrow">ONE-TIME SETUP</small><h2 id="installTitle">Install the browser model</h2><p id="installCopy">About 1.75 GB. The model stays cached in this browser.</p></div>
               <button class="primary" id="installBtn">↓ <span>Install model</span></button>
-              <div class="progress" id="installProgress" hidden><div><i id="progressBar"></i></div><p><span id="progressText">Preparing…</span><b id="progressPct">0%</b></p></div>
+              <div class="progress" id="installProgress" hidden=""><div><i id="progressBar" style="width: 0%;"></i></div><p><span id="progressText">Loading the browser AI runtime…</span><b id="progressPct">0%</b></p></div>
             </div>
             <div class="suggestions">
               <button data-prompt="Write a clean Python function that finds duplicate values in a list, then explain its time complexity."><small>CODING</small><b>Find duplicates in Python</b><span>›</span></button>
@@ -93,11 +91,11 @@ html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--bg);c
           <div class="messages" id="messages" aria-live="polite"></div>
         </div>
         <div class="composer-dock">
-          <div class="attachments" id="attachments" hidden></div>
+          <div class="attachments" id="attachments" hidden=""></div>
           <form class="composer" id="composer">
             <textarea id="prompt" rows="1" maxlength="12000" placeholder="Message NexusEco"></textarea>
             <div class="composer-row">
-              <div><label class="tool">＋<span>Attach</span><input id="fileInput" hidden type="file" multiple accept=".txt,.md,.csv,.json,.js,.ts,.py,.html,.css,.xml,.yaml,.yml,.java,.c,.cpp,.rs,.go,.sh" /></label><button class="tool" id="deepBtn" type="button" aria-pressed="false"><i></i><span>Deep mode</span></button></div>
+              <div><label class="tool">＋<span>Attach</span><input id="fileInput" hidden="" type="file" multiple="" accept=".txt,.md,.csv,.json,.js,.ts,.py,.html,.css,.xml,.yaml,.yml,.java,.c,.cpp,.rs,.go,.sh"></label><button class="tool" id="deepBtn" type="button" aria-pressed="false"><i></i><span>Deep mode</span></button></div>
               <button class="send" id="sendBtn" type="submit"><span class="send-symbol">↑</span><span class="stop-symbol">■</span></button>
             </div>
           </form>
@@ -110,19 +108,19 @@ html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--bg);c
         <div class="switch"><button class="active" data-scope="current">This chat</button><button data-scope="all">All chats</button></div>
         <div class="metrics">
           <article><span>Local replies</span><strong id="ecoReplies">0</strong><small>cloud calls avoided</small></article>
-          <article><span>Cloud water</span><strong id="ecoWater">0.00 mL</strong><small id="ecoWaterSub">0 bottles · 0 fl oz</small></article>
+          <article><span>Cloud water</span><strong id="ecoWater">0.00 mL</strong><small id="ecoWaterSub">0.000 bottles · 0.000 fl oz</small></article>
           <article><span>Energy difference</span><strong id="ecoEnergy">0.00 Wh</strong><small>cloud baseline minus estimated local use</small></article>
           <article><span>Air / carbon</span><strong id="ecoCarbon">0.000 g</strong><small>estimated CO₂e difference</small></article>
           <article><span>Land impact</span><strong>Not quantified</strong><small>no defensible per-chat conversion</small></article>
-          <article><span>Local compute</span><strong id="ecoTime">0 s</strong><small>generation time on this device</small></article>
+          <article><span>Local compute</span><strong id="ecoTime">0.0 s</strong><small>generation time on this device</small></article>
         </div>
-        <div class="info-row"><div><h2>How it is calculated</h2><p id="methodText"></p></div><button class="secondary" data-view="settings">Edit assumptions</button></div>
-        <h2 class="section-title">Conversation breakdown</h2><div class="impact-list" id="impactList"></div>
+        <div class="info-row"><div><h2>How it is calculated</h2><p id="methodText">Cloud comparison: 0.24 Wh, 0.03 g CO₂e, and 0.26 mL water per reply. Local electricity uses generation time × 30 W at 400 g CO₂e/kWh.</p></div><button class="secondary" data-view="settings">Edit assumptions</button></div>
+        <h2 class="section-title">Conversation breakdown</h2><div class="impact-list" id="impactList"><div class="impact-empty">Complete a local reply to see an estimate here.</div></div>
         <div class="callout"><b>Important</b><p>Local AI is not impact-free. Your laptop uses electricity and hardware has embodied impacts. The browser cannot measure wall power, grid water, or land use, so these values stay labeled as estimates.</p></div>
       </div></section>
 
       <section class="view page" id="readView"><div class="page-inner reading">
-        <div class="page-head"><small>READ & LEARN</small><h1>AI has a physical footprint</h1><p>A short, source-linked guide to water, electricity, carbon, and what local inference actually changes.</p></div>
+        <div class="page-head"><small>READ &amp; LEARN</small><h1>AI has a physical footprint</h1><p>A short, source-linked guide to water, electricity, carbon, and what local inference actually changes.</p></div>
         <article class="chapter"><b>01</b><div><h2>Why AI can use water</h2><p>Data centers can consume water directly for cooling and indirectly through electricity generation. Cooling design, weather, location, grid mix, model size, and prompt length all change the result.</p></div></article>
         <article class="chapter"><b>02</b><div><h2>Local does not mean zero-impact</h2><p>NexusEco moves inference to your device and keeps prompts out of a remote chat server. Your laptop still uses electricity, while the model download and device manufacturing also have impacts.</p></div></article>
         <article class="chapter"><b>03</b><div><h2>Why use a smaller model</h2><p>A 3B model generally needs less memory and computation than a much larger model. It is useful for everyday writing, code, and math, but it is not automatically more accurate.</p></div></article>
@@ -137,11 +135,11 @@ html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--bg);c
       </div></section>
 
       <section class="view page" id="modelView"><div class="page-inner">
-        <div class="page-head model-head"><div><small>ON-DEVICE MODEL</small><h1>Local model</h1><p>Qwen2.5 · 3B parameters · four-bit browser weights</p></div><span class="state"><i class="dot" id="largeDot"></i><b id="largeState">Checking cache</b></span></div>
+        <div class="page-head model-head"><div><small>ON-DEVICE MODEL</small><h1>Local model</h1><p>Qwen2.5 · 3B parameters · four-bit browser weights</p></div><span class="state"><i class="dot " id="largeDot"></i><b id="largeState">Not installed</b></span></div>
         <div class="model-panel">
-          <div class="facts"><div><span>Active weights</span><b id="activeModel">Checking…</b></div><div><span>Download</span><b>About 1.75 GB</b></div><div><span>Runtime</span><b>WebLLM + WebGPU</b></div><div><span>Storage</span><b>Browser cache</b></div></div>
-          <div class="model-actions"><button class="primary" id="modelAction">↓ <span>Install model</span></button><button class="secondary" id="removeModel" disabled>Remove cached model</button></div>
-          <div class="progress" id="modelProgress" hidden><div><i id="modelProgressBar"></i></div><p><span id="modelProgressText">Preparing…</span><b id="modelProgressPct">0%</b></p></div>
+          <div class="facts"><div><span>Active weights</span><b id="activeModel">Qwen2.5 3B · browser build</b></div><div><span>Download</span><b>About 1.75 GB</b></div><div><span>Runtime</span><b>WebLLM + WebGPU</b></div><div><span>Storage</span><b>Browser cache</b></div></div>
+          <div class="model-actions"><button class="primary" id="modelAction">↓ <span>Install model</span></button><button class="secondary" id="removeModel" disabled="">Remove cached model</button></div>
+          <div class="progress" id="modelProgress" hidden=""><div><i id="modelProgressBar" style="width: 0%;"></i></div><p><span id="modelProgressText">Loading the browser AI runtime…</span><b id="modelProgressPct">0%</b></p></div>
         </div>
         <div class="details"><article><h2>Downloaded once</h2><p>After the first download, WebLLM keeps the model under this site’s browser origin. Later sessions load the cached files without intentionally downloading them again.</p></article><article><h2>Private by design</h2><p>Generation runs in a browser worker. There is no chat backend, account, or API key.</p></article><article><h2>When it can disappear</h2><p>Clearing site data, private browsing, storage eviction, or changing browser, device, or domain can remove the cache.</p></article><article><h2>Text model</h2><p>This build accepts text and code files. It does not understand images; vision would require a separate model download.</p></article></div>
       </div></section>
@@ -150,27 +148,27 @@ html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--bg);c
         <div class="page-head"><small>PREFERENCES</small><h1>Settings</h1><p>Everything here is stored locally.</p></div>
         <form id="settingsForm">
           <fieldset><legend>Appearance</legend><label><span><b>Theme</b><small>Dark, light, or device setting.</small></span><select id="themeSetting"><option value="system">System</option><option value="dark">Dark</option><option value="light">Light</option></select></label></fieldset>
-          <fieldset><legend>Generation</legend><label><span><b>Temperature</b><small>Lower is more focused.</small></span><input id="temperature" type="number" min="0" max="1.5" step="0.05" /></label><label><span><b>Maximum tokens</b><small>Upper limit for a reply.</small></span><input id="maxTokens" type="number" min="64" max="1536" step="32" /></label><label class="column"><span><b>System prompt</b><small>Default assistant behavior.</small></span><textarea id="systemPrompt" rows="6"></textarea></label></fieldset>
-          <fieldset><legend>Eco assumptions</legend><label><span><b>Device power</b><small>Estimated power while generating.</small></span><div><input id="devicePower" type="number" min="1" max="300" /><em>W</em></div></label><label><span><b>Grid carbon intensity</b><small>Local operational estimate.</small></span><div><input id="gridCarbon" type="number" min="0" max="2000" /><em>g/kWh</em></div></label><label><span><b>Cloud energy baseline</b></span><div><input id="cloudEnergy" type="number" min="0" step="0.01" /><em>Wh</em></div></label><label><span><b>Cloud carbon baseline</b></span><div><input id="cloudCarbon" type="number" min="0" step="0.01" /><em>g</em></div></label><label><span><b>Cloud water baseline</b></span><div><input id="cloudWater" type="number" min="0" step="0.01" /><em>mL</em></div></label></fieldset>
+          <fieldset><legend>Generation</legend><label><span><b>Temperature</b><small>Lower is more focused.</small></span><input id="temperature" type="number" min="0" max="1.5" step="0.05"></label><label><span><b>Maximum tokens</b><small>Upper limit for a reply.</small></span><input id="maxTokens" type="number" min="64" max="1536" step="32"></label><label class="column"><span><b>System prompt</b><small>Default assistant behavior.</small></span><textarea id="systemPrompt" rows="6"></textarea></label></fieldset>
+          <fieldset><legend>Eco assumptions</legend><label><span><b>Device power</b><small>Estimated power while generating.</small></span><div><input id="devicePower" type="number" min="1" max="300"><em>W</em></div></label><label><span><b>Grid carbon intensity</b><small>Local operational estimate.</small></span><div><input id="gridCarbon" type="number" min="0" max="2000"><em>g/kWh</em></div></label><label><span><b>Cloud energy baseline</b></span><div><input id="cloudEnergy" type="number" min="0" step="0.01"><em>Wh</em></div></label><label><span><b>Cloud carbon baseline</b></span><div><input id="cloudCarbon" type="number" min="0" step="0.01"><em>g</em></div></label><label><span><b>Cloud water baseline</b></span><div><input id="cloudWater" type="number" min="0" step="0.01"><em>mL</em></div></label></fieldset>
           <div class="form-actions"><button class="primary" type="submit">Save settings</button><button class="secondary" type="button" id="resetSettings">Reset defaults</button></div>
         </form>
-        <fieldset><legend>Local data</legend><p class="storage" id="storage">Calculating browser storage…</p><div class="form-actions"><button class="secondary" id="exportAll">Export all chats</button><button class="danger" id="clearAll">Delete all chats</button></div></fieldset>
+        <fieldset><legend>Local data</legend><p class="storage" id="storage">3.7 GB used of 14 GB · the browser may evict stored data</p><div class="form-actions"><button class="secondary" id="exportAll">Export all chats</button><button class="danger" id="clearAll">Delete all chats</button></div></fieldset>
         <div class="legal"><button data-legal="privacy">Privacy</button><button data-legal="terms">Terms</button><span>NexusEco AI v1.0</span></div>
       </div></section>
     </main>
   </div>
 
-  <dialog id="welcomeDialog" class="dialog welcome"><form method="dialog" id="welcomeForm"><div class="dialog-mark">N</div><small>WELCOME TO NEXUSECO</small><h1>AI that stays with you.</h1><p>The model and chats are stored in this browser. The first model download is about 1.75 GB; later visits check the cache instead of intentionally downloading it again.</p><ul><li>No account or API key</li><li>Chats stay on this device</li><li>AI answers can be wrong</li></ul><label class="consent"><input id="consent" type="checkbox" /><span>I agree to the <button type="button" data-legal="terms">Terms</button> and acknowledge the <button type="button" data-legal="privacy">Privacy Notice</button>.</span></label><button class="primary wide" id="continueBtn" value="continue" disabled>Continue</button></form></dialog>
-  <dialog id="searchDialog" class="dialog search-dialog"><div><span>⌕</span><input id="searchInput" type="search" placeholder="Search chats" /><button id="closeSearch">×</button></div><section id="searchResults"></section></dialog>
-  <dialog id="renameDialog" class="dialog small-dialog"><form method="dialog" id="renameForm"><h2>Rename chat</h2><input id="renameInput" maxlength="80" /><div><button class="secondary" value="cancel">Cancel</button><button class="primary" value="save">Save</button></div></form></dialog>
+  <dialog id="welcomeDialog" class="dialog welcome"><form method="dialog" id="welcomeForm"><div class="dialog-mark">N</div><small>WELCOME TO NEXUSECO</small><h1>AI that stays with you.</h1><p>The model and chats are stored in this browser. The first model download is about 1.75 GB; later visits check the cache instead of intentionally downloading it again.</p><ul><li>No account or API key</li><li>Chats stay on this device</li><li>AI answers can be wrong</li></ul><label class="consent"><input id="consent" type="checkbox"><span>I agree to the <button type="button" data-legal="terms">Terms</button> and acknowledge the <button type="button" data-legal="privacy">Privacy Notice</button>.</span></label><button class="primary wide" id="continueBtn" value="continue">Continue</button></form></dialog>
+  <dialog id="searchDialog" class="dialog search-dialog"><div><span>⌕</span><input id="searchInput" type="search" placeholder="Search chats"><button id="closeSearch">×</button></div><section id="searchResults"></section></dialog>
+  <dialog id="renameDialog" class="dialog small-dialog"><form method="dialog" id="renameForm"><h2>Rename chat</h2><input id="renameInput" maxlength="80"><div><button class="secondary" value="cancel">Cancel</button><button class="primary" value="save">Save</button></div></form></dialog>
   <dialog id="confirmDialog" class="dialog small-dialog"><form method="dialog"><h2 id="confirmTitle">Are you sure?</h2><p id="confirmText"></p><div><button class="secondary" value="cancel">Cancel</button><button class="danger" id="confirmBtn" value="confirm">Delete</button></div></form></dialog>
   <dialog id="legalDialog" class="dialog legal-dialog"><button class="close-legal" id="closeLegal">×</button><article id="legalContent"></article></dialog>
   <div class="toasts" id="toasts" aria-live="polite"></div>
   <script type="module">
-import * as webllm from "https://esm.run/@mlc-ai/web-llm@0.2.85";
-import { marked } from "https://esm.run/marked@15.0.12";
-import DOMPurify from "https://esm.run/dompurify@3.2.6";
-import katex from "https://esm.run/katex@0.16.22";
+let webllm = null;
+let marked = { setOptions(){}, parse(value){ return `<p>${escapeHTML(value).replace(/\n/g,"<br>")}</p>`; } };
+let DOMPurify = { sanitize(value){ return value; } };
+let katex = { renderToString(value){ return `<code>${escapeHTML(value)}</code>`; } };
 
 
 const NEXUS = Object.freeze({
@@ -233,14 +231,13 @@ const $ = (q, root = document) => root.querySelector(q);
 const $$ = (q, root = document) => [...root.querySelectorAll(q)];
 const KEYS = { chats:"nexuseco.chats.v1", active:"nexuseco.active.v1", settings:"nexuseco.settings.v1", accepted:"nexuseco.accepted.v1", sidebar:"nexuseco.sidebar.v1" };
 const DEFAULTS = { theme:"system", temperature:.35, maxTokens:640, systemPrompt:SYSTEM_PROMPT, devicePower:30, gridCarbon:400, cloudEnergy:.24, cloudCarbon:.03, cloudWater:.26 };
-const runtime = modelRuntime(webllm);
+let runtime = { id:null, label:NEXUS.fallback.label, source:NEXUS.fallback.url, isCustom:false, downloadGB:NEXUS.fallback.downloadGB, appConfig:null };
 const state = {
   chats: readJSON(KEYS.chats, []), activeId:localStorage.getItem(KEYS.active), settings:{...DEFAULTS,...readJSON(KEYS.settings,{})},
   attachments:[], view:"chat", scope:"current", deep:false, generating:false, stopping:false,
   engine:null, worker:null, webgpu:false,
   model:{checking:true,cached:false,loading:false,ready:false,error:null,progress:0,text:"Checking browser cache…"}
 };
-marked.setOptions({gfm:true,breaks:true});
 normalize();
 restoreSidebar();
 bind();
@@ -263,19 +260,19 @@ function normalize(){
 }
 
 function bind(){
-  $('[data-view]').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.view)));
+  $$('[data-view]').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.view)));
   $('#newChatBtn').onclick=()=>newChat(); $('#collapseBtn').onclick=toggleSidebar; $('#mobileBtn').onclick=()=>$('#app').classList.add('mobile-open'); $('#scrim').onclick=closeMobile;
   $('#composer').onsubmit=send; $('#prompt').oninput=resizePrompt; $('#prompt').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();$('#composer').requestSubmit()}};
   $('#deepBtn').onclick=()=>{state.deep=!state.deep;$('#deepBtn').setAttribute('aria-pressed',String(state.deep));toast(state.deep?'Deep mode enabled. It is still offline.':'Deep mode disabled.')};
-  $('#fileInput').onchange=readFiles; $('.suggestions button').forEach(b=>b.onclick=()=>{$('#prompt').value=b.dataset.prompt;resizePrompt();$('#prompt').focus()});
+  $('#fileInput').onchange=readFiles; $$('.suggestions button').forEach(b=>b.onclick=()=>{$('#prompt').value=b.dataset.prompt;resizePrompt();$('#prompt').focus()});
   $('#installBtn').onclick=startModel; $('#modelAction').onclick=startModel; $('#removeModel').onclick=removeModel;
   $('#searchBtn').onclick=openSearch; $('#closeSearch').onclick=()=>$('#searchDialog').close(); $('#searchInput').oninput=renderSearch;
   $('#chatMenuBtn').onclick=e=>{e.stopPropagation();$('#chatMenu').hidden=!$('#chatMenu').hidden}; document.addEventListener('click',e=>{if(!$('#chatMenu').contains(e.target))$('#chatMenu').hidden=true});
   $('#renameBtn').onclick=openRename; $('#chatTitle').onclick=openRename; $('#renameForm').onsubmit=renameChat; $('#deleteBtn').onclick=deleteChat; $('#exportBtn').onclick=exportChat;
   $('#settingsForm').onsubmit=saveSettings; $('#resetSettings').onclick=resetSettings; $('#themeBtn').onclick=toggleTheme; $('#exportAll').onclick=exportAll; $('#clearAll').onclick=clearAll;
-  $('[data-scope]').forEach(b=>b.onclick=()=>{state.scope=b.dataset.scope;$('[data-scope]').forEach(x=>x.classList.toggle('active',x===b));renderEco()});
+  $$('[data-scope]').forEach(b=>b.onclick=()=>{state.scope=b.dataset.scope;$$('[data-scope]').forEach(x=>x.classList.toggle('active',x===b));renderEco()});
   $('#consent').onchange=()=>$('#continueBtn').disabled=!$('#consent').checked; $('#welcomeForm').onsubmit=acceptWelcome; $('#welcomeDialog').addEventListener('cancel',e=>e.preventDefault());
-  $('[data-legal]').forEach(b=>b.onclick=()=>openLegal(b.dataset.legal)); $('#closeLegal').onclick=()=>$('#legalDialog').close();
+  $$('[data-legal]').forEach(b=>b.onclick=()=>openLegal(b.dataset.legal)); $('#closeLegal').onclick=()=>$('#legalDialog').close();
   addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();newChat()} if(e.key==='Escape'&&state.generating)stopGeneration()});
   matchMedia('(prefers-color-scheme:dark)').addEventListener('change',()=>{if(state.settings.theme==='system')applyTheme()});
 }
@@ -285,13 +282,22 @@ async function checkBrowser(){
     state.webgpu=!!(isSecureContext&&navigator.gpu&&await navigator.gpu.requestAdapter());
     $('#gpuWarning').hidden=state.webgpu;
     if(!state.webgpu){state.model.error='WebGPU unavailable';return}
+    state.model.text='Loading the browser AI runtime…';renderModel();
+    const modules=await Promise.all([
+      import('https://esm.run/@mlc-ai/web-llm@0.2.85'),
+      import('https://esm.run/marked@15.0.12'),
+      import('https://esm.run/dompurify@3.2.6'),
+      import('https://esm.run/katex@0.16.22')
+    ]);
+    webllm=modules[0];marked=modules[1].marked;DOMPurify=modules[2].default;katex=modules[3].default;
+    marked.setOptions({gfm:true,breaks:true});runtime=modelRuntime(webllm);
     state.model.cached=await webllm.hasModelInCache(runtime.id,runtime.appConfig); state.model.error=null;
   }catch(e){state.model.error=niceError(e)}finally{state.model.checking=false;renderModel();storageEstimate()}
 }
 
 async function startModel(){
   if(state.model.ready||state.model.loading)return;
-  if(!state.webgpu){toast('WebGPU is unavailable in this browser or device.','error');return}
+  if(!state.webgpu||!webllm||!runtime.id){toast(state.model.error||'The browser AI runtime is not available. Reload the page while online.','error');return}
   const wasCached=state.model.cached; Object.assign(state.model,{loading:true,error:null,progress:0,text:wasCached?'Loading cached weights into memory…':'Starting the one-time download…'}); renderModel();
   try{
     try{await navigator.storage?.persist?.()}catch{}
@@ -312,7 +318,7 @@ async function removeModel(){
 function renderModel(){
   const s=modelStatus(); [['#modelDot'],['#sideDot'],['#largeDot']].forEach(([id])=>$(id).className='dot '+s.kind);
   $('#modelPill').textContent=s.short; $('#sideStatus').textContent=s.short; $('#largeState').textContent=s.long; $('#activeModel').textContent=runtime.label;
-  [$('#installBtn'),$('#modelAction')].forEach(b=>{b.disabled=state.model.loading||state.model.ready||!state.webgpu; $('span',b).textContent=state.model.loading?'Loading…':state.model.ready?'Model ready':state.model.cached?'Load cached model':'Install model'});
+  [$('#installBtn'),$('#modelAction')].forEach(b=>{b.disabled=state.model.loading||state.model.ready||!state.webgpu||!webllm; $('span',b).textContent=state.model.loading?'Loading…':state.model.ready?'Model ready':state.model.cached?'Load cached model':'Install model'});
   $('#removeModel').disabled=!state.model.cached||state.model.loading||state.generating;
   if(state.model.ready){$('#installEyebrow').textContent='READY ON DEVICE';$('#installTitle').textContent='The local model is loaded';$('#installCopy').textContent='Messages now run in this browser without a chat API.'}
   else if(state.model.cached){$('#installEyebrow').textContent='FOUND IN BROWSER CACHE';$('#installTitle').textContent='Load the saved model';$('#installCopy').textContent='No redownload is expected. This loads cached weights into GPU memory.'}
@@ -352,7 +358,7 @@ function renderMessages(){
 }
 function paintStream(m){const el=document.querySelector(`[data-id="${CSS.escape(m.id)}"] .message-content`);if(!el)return;el.innerHTML=renderMarkdown(m.content);el.classList.add('cursor');enhance(el);const s=$('#chatScroll'),d=s.scrollHeight-s.scrollTop-s.clientHeight;if(d<220)s.scrollTop=s.scrollHeight}
 function renderMarkdown(source){const math=[];const token=(x,display)=>`NEXUSECOMATH${math.push({x,display})-1}TOKEN`;let src=String(source||'').replace(/\$\$([\s\S]+?)\$\$/g,(_,x)=>token(x,true)).replace(/\\\[([\s\S]+?)\\\]/g,(_,x)=>token(x,true)).replace(/\\\(([\s\S]+?)\\\)/g,(_,x)=>token(x,false));let html;try{html=marked.parse(src)}catch{html='<p>'+escapeHTML(src)+'</p>'}html=DOMPurify.sanitize(html,{USE_PROFILES:{html:true},FORBID_TAGS:['style','iframe','object','embed','form']});return html.replace(/NEXUSECOMATH(\d+)TOKEN/g,(_,i)=>{const v=math[+i];try{return katex.renderToString(v.x,{displayMode:v.display,throwOnError:false,strict:false})}catch{return'<code>'+escapeHTML(v.x)+'</code>'}})}
-function enhance(root){$('a',root).forEach(a=>{a.target='_blank';a.rel='noreferrer noopener'});$('pre',root).forEach(pre=>{if(pre.parentElement?.classList.contains('codebox'))return;const code=$('code',pre),lang=[...(code?.classList||[])].find(x=>x.startsWith('language-'))?.slice(9)||'code',wrap=document.createElement('div'),head=document.createElement('div'),button=document.createElement('button');wrap.className='codebox';head.className='codehead';head.innerHTML='<span></span>';head.querySelector('span').textContent=lang;button.textContent='Copy';button.onclick=async()=>{await navigator.clipboard.writeText(code?.textContent||pre.textContent||'');button.textContent='Copied';setTimeout(()=>button.textContent='Copy',1000)};head.append(button);pre.replaceWith(wrap);wrap.append(head,pre)})}
+function enhance(root){$$('a',root).forEach(a=>{a.target='_blank';a.rel='noreferrer noopener'});$$('pre',root).forEach(pre=>{if(pre.parentElement?.classList.contains('codebox'))return;const code=$('code',pre),lang=[...(code?.classList||[])].find(x=>x.startsWith('language-'))?.slice(9)||'code',wrap=document.createElement('div'),head=document.createElement('div'),button=document.createElement('button');wrap.className='codebox';head.className='codehead';head.innerHTML='<span></span>';head.querySelector('span').textContent=lang;button.textContent='Copy';button.onclick=async()=>{await navigator.clipboard.writeText(code?.textContent||pre.textContent||'');button.textContent='Copied';setTimeout(()=>button.textContent='Copy',1000)};head.append(button);pre.replaceWith(wrap);wrap.append(head,pre)})}
 function action(symbol,title,fn){const b=document.createElement('button');b.type='button';b.title=title;b.textContent=symbol;b.onclick=fn;return b}
 async function regenerate(){if(state.generating||!state.model.ready)return;const c=activeChat(),i=c.messages.map(m=>m.role).lastIndexOf('assistant');if(i<0)return;c.messages.splice(i,1);saveChats();renderMessages();await generate(c)}
 
@@ -372,9 +378,9 @@ function renderSearch(){const q=$('#searchInput').value.trim().toLowerCase(),lis
 async function readFiles(e){const files=[...e.target.files];e.target.value='';for(const f of files.slice(0,Math.max(0,5-state.attachments.length))){if(f.size>500000){toast(f.name+' is larger than 500 KB.','error');continue}try{const text=await f.text();if(text.includes('\0'))throw Error('Binary files are not supported');state.attachments.push({id:id(),name:f.name,type:f.type,size:f.size,text})}catch(err){toast('Could not read '+f.name+': '+niceError(err),'error')}}renderAttachments()}
 function renderAttachments(){const box=$('#attachments');box.hidden=!state.attachments.length;box.replaceChildren();for(const f of state.attachments){const c=document.createElement('div');c.className='file-chip';c.innerHTML='<span></span><button type="button">×</button>';$('span',c).textContent=f.name+' · '+bytes(f.size);$('button',c).onclick=()=>{state.attachments=state.attachments.filter(x=>x.id!==f.id);renderAttachments()};box.append(c)}}
 
-function showView(view){const target=$('#'+view+'View');if(!target)return;state.view=view;$('.view').forEach(v=>v.classList.toggle('active',v===target));$('.nav[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===view));renderHeader();if(view==='eco')renderEco();if(view==='settings'){fillSettings();storageEstimate()}closeMobile()}
+function showView(view){const target=$('#'+view+'View');if(!target)return;state.view=view;$$('.view').forEach(v=>v.classList.toggle('active',v===target));$$('.nav[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===view));renderHeader();if(view==='eco')renderEco();if(view==='settings'){fillSettings();storageEstimate()}closeMobile()}
 function impact(chats){const rec=chats.flatMap(c=>c.messages.filter(m=>m.role==='assistant'&&m.metrics).map(m=>m.metrics)),replies=rec.length,ms=rec.reduce((a,m)=>a+(+m.durationMs||0),0),localWh=ms/3600000*state.settings.devicePower,cloudWh=replies*state.settings.cloudEnergy,localCarbon=localWh/1000*state.settings.gridCarbon;return{replies,ms,water:replies*state.settings.cloudWater,energy:cloudWh-localWh,carbon:replies*state.settings.cloudCarbon-localCarbon}}
-function renderEco(){const chats=state.scope==='current'?[activeChat()]:state.chats,x=impact(chats),all=impact(state.chats);$('#ecoReplies').textContent=x.replies;$('#ecoWater').textContent=water(x.water);$('#ecoWaterSub').textContent=(x.water/500).toFixed(3)+' bottles · '+(x.water/29.5735).toFixed(3)+' fl oz';$('#ecoEnergy').textContent=signed(x.energy,'Wh',2);$('#ecoCarbon').textContent=signed(x.carbon,'g',3);$('#ecoTime').textContent=duration(x.ms);$('#miniEco').textContent=all.replies+' local replies';$('#methodText').textContent=`Cloud comparison: ${state.settings.cloudEnergy} Wh, ${state.settings.cloudCarbon} g CO₂e, and ${state.settings.cloudWater} mL water per reply. Local electricity uses generation time × ${state.settings.devicePower} W at ${state.settings.gridCarbon} g CO₂e/kWh.`;const box=$('#impactList');box.replaceChildren();const rows=chats.map(c=>({c,x:impact([c])})).filter(r=>r.x.replies);if(!rows.length){box.innerHTML='<div class="impact-empty">Complete a local reply to see an estimate here.</div>';return}for(const r of rows){const d=document.createElement('div');d.className='impact-row';d.innerHTML='<b></b><span></span><span></span>';$('b',d).textContent=r.c.title;const s=$('span',d);s[0].textContent=r.x.replies+' replies';s[1].textContent=water(r.x.water)+' cloud-water baseline';box.append(d)}}
+function renderEco(){const chats=state.scope==='current'?[activeChat()]:state.chats,x=impact(chats),all=impact(state.chats);$('#ecoReplies').textContent=x.replies;$('#ecoWater').textContent=water(x.water);$('#ecoWaterSub').textContent=(x.water/500).toFixed(3)+' bottles · '+(x.water/29.5735).toFixed(3)+' fl oz';$('#ecoEnergy').textContent=signed(x.energy,'Wh',2);$('#ecoCarbon').textContent=signed(x.carbon,'g',3);$('#ecoTime').textContent=duration(x.ms);$('#miniEco').textContent=all.replies+' local replies';$('#methodText').textContent=`Cloud comparison: ${state.settings.cloudEnergy} Wh, ${state.settings.cloudCarbon} g CO₂e, and ${state.settings.cloudWater} mL water per reply. Local electricity uses generation time × ${state.settings.devicePower} W at ${state.settings.gridCarbon} g CO₂e/kWh.`;const box=$('#impactList');box.replaceChildren();const rows=chats.map(c=>({c,x:impact([c])})).filter(r=>r.x.replies);if(!rows.length){box.innerHTML='<div class="impact-empty">Complete a local reply to see an estimate here.</div>';return}for(const r of rows){const d=document.createElement('div');d.className='impact-row';d.innerHTML='<b></b><span></span><span></span>';$('b',d).textContent=r.c.title;const s=$$('span',d);s[0].textContent=r.x.replies+' replies';s[1].textContent=water(r.x.water)+' cloud-water baseline';box.append(d)}}
 
 function fillSettings(){$('#themeSetting').value=state.settings.theme;$('#temperature').value=state.settings.temperature;$('#maxTokens').value=state.settings.maxTokens;$('#systemPrompt').value=state.settings.systemPrompt;$('#devicePower').value=state.settings.devicePower;$('#gridCarbon').value=state.settings.gridCarbon;$('#cloudEnergy').value=state.settings.cloudEnergy;$('#cloudCarbon').value=state.settings.cloudCarbon;$('#cloudWater').value=state.settings.cloudWater}
 function saveSettings(e){e.preventDefault();state.settings={theme:$('#themeSetting').value,temperature:clamp($('#temperature').value,0,1.5,.35),maxTokens:clamp($('#maxTokens').value,64,1536,640),systemPrompt:$('#systemPrompt').value.trim()||SYSTEM_PROMPT,devicePower:clamp($('#devicePower').value,1,300,30),gridCarbon:clamp($('#gridCarbon').value,0,2000,400),cloudEnergy:clamp($('#cloudEnergy').value,0,100,.24),cloudCarbon:clamp($('#cloudCarbon').value,0,100,.03),cloudWater:clamp($('#cloudWater').value,0,1000,.26)};localStorage.setItem(KEYS.settings,JSON.stringify(state.settings));applyTheme();renderEco();toast('Settings saved.')}
@@ -417,5 +423,6 @@ function escapeHTML(x){return String(x).replaceAll('&','&amp;').replaceAll('<','
 function niceError(e){const m=String(e?.message||e||'Unknown error').replace(/\s+/g,' ').trim();if(/out of memory|memory/i.test(m))return'Not enough GPU memory. Close other tabs and apps.';if(/network|fetch/i.test(m))return'Model files could not be reached. Check the connection and repository.';if(/webgpu|gpu|adapter/i.test(m))return'WebGPU could not start on this device.';return m.slice(0,220)}
 
   </script>
-</body>
-</html>
+
+
+</body></html>
